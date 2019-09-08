@@ -1,46 +1,59 @@
-const dotenv = require('dotenv');
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const jsonwebtoken = require('jsonwebtoken');
-const client = require('./src/models/clientModel');
-const routes = require('./src/routes/userRoutes');
+import express from 'express';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import jsonwebtoken from 'jsonwebtoken';
+import client from './src/models/clientModel';
+import routes from './src/routes/userRoutes';
 
-const result = dotenv.config({path: __dirname + '/.env'});
-if (result.error) {
-    console.log(result.error)
-}
+var app = express()
+app.listen(3400, function()
+{console.log(`Server is listening on port 3400`)})
+module.exports = app;
 
-const app = express();
-const PORT =  process.env.PORT;
+// import dotenv from 'dotenv';
+// import express from 'express';
+// import mongoose from 'mongoose';
+// import bodyParser from 'body-parser';
+// import jsonwebtoken from 'jsonwebtoken';
+// import client from './src/models/clientModel';
+// import routes from './src/routes/userRoutes';
 
-// mongoose connection
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
+// const result = dotenv.config({path: __dirname + '/.env'});
+// if (result.error) {
+//     console.log(result.error)
+// }
 
-// bodyparser setup
-app.use(bodyParser.urlencoded({ extended: true}));
-app.use(bodyParser.json());
+// const app = express();
+// const PORT =  process.env.PORT;
 
-// JWT Setup
-app.use((request, response, next) => {
-    if (request.headers && request.headers.authorization && request.headers.authorization.split(' ')[0] === 'JWT') {
-        jsonwebtoken.verify(request.headers.authorization.split(' ')[1], 'RESTFULAPIs', (error, decode) => {
-            if (error) request.client = undefined;
-            request.client = decode;
-            next();
-        });
-    } else {
-        request.client = undefined;
-        next();
-    }
-});
+// // mongoose connection
+// mongoose.Promise = global.Promise;
+// mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
 
-routes(app);
+// // bodyparser setup
+// app.use(bodyParser.urlencoded({ extended: true}));
+// app.use(bodyParser.json());
 
-// serving static files
-app.use(express.static('public/images'));
+// // JWT Setup
+// app.use((request, response, next) => {
+//     if (request.headers && request.headers.authorization && request.headers.authorization.split(' ')[0] === 'JWT') {
+//         jsonwebtoken.verify(request.headers.authorization.split(' ')[1], 'RESTFULAPIs', (error, decode) => {
+//             if (error) request.client = undefined;
+//             request.client = decode;
+//             next();
+//         });
+//     } else {
+//         request.client = undefined;
+//         next();
+//     }
+// });
 
-app.listen(PORT, () => {
-    console.log(`your server is running on port ${PORT}`);
-});
+// routes(app);
+
+// // serving static files
+// app.use(express.static('public/images'));
+
+// app.listen(PORT, () => {
+//     console.log(`your server is running on port ${PORT}`);
+// });

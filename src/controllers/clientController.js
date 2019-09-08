@@ -1,11 +1,12 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const ClientSchema = require('../models/clientModel');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { ClientSchema } 
+from '../models/clientModel';
 
 const Client = mongoose.model('client', ClientSchema);
 
-exports.register = (request, response) => {
+export function register(request, response) {
     const newClient = new Client(request.body);
     newClient.hashPassword = bcrypt.hashSync(request.body.password, 10);
     newClient.save((error, client) => {
@@ -20,7 +21,7 @@ exports.register = (request, response) => {
     });
 }
 
-exports.login = (request, response) => {
+export function login(request, response) {
     Client.findOne({
         clientId: request.body.clientId
     }, (error, client) => {
@@ -49,7 +50,7 @@ exports.login = (request, response) => {
     });
 }
 
-exports.loginRequired = (request, response, next) => {
+export function loginRequired(request, response, next) {
     if (request.client) {
         next();
     } else {

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
-const ClientSchema = new Schema({
+export const ClientSchema = new Schema({
     username: { type: String, required: true },
     clientId: { type: String, required: true },
     hashPassword: { type: String, required: true },
@@ -12,5 +12,3 @@ const ClientSchema = new Schema({
 ClientSchema.methods.comparePassword = (password, hashPassword) => {
     return bcrypt.compareSync(password, hashPassword);
 };
-
-module.exports = ClientSchema;

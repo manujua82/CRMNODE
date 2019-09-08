@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const UserSchema = require('../models/userModel');
+import mongoose from 'mongoose';
+import { UserSchema } from '../models/userModel';
 
 const User = mongoose.model('User', UserSchema);
 
-exports.addNewUser = (request, response) => {
+export function addNewUser(request, response) {
     let newUser = new User(request.body);
     newUser.save((error, user) => {
         if (error) {
@@ -13,7 +13,7 @@ exports.addNewUser = (request, response) => {
     });
 }
 
-exports.getUsers = (request, response) => {
+export function getUsers(request, response) {
     User.find({}, (error, user) => {
         if (error) {
             response.send(error);
@@ -22,7 +22,7 @@ exports.getUsers = (request, response) => {
     });
 };
 
-exports.getUserWithID = (request, response) => {
+export function getUserWithID(request, response) {
     User.findById(request.params.userId, (error, user) => {
         if (error) {
             response.send(error);
@@ -31,7 +31,7 @@ exports.getUserWithID = (request, response) => {
     });
 };
 
-exports.updateUser = (request, response) => {
+export function updateUser(request, response) {
     User.findOneAndUpdate({ _id: request.params.userId }, request.body, { new: true }, (error, user) => {
         if (error) {
             response.send(error);
@@ -40,7 +40,7 @@ exports.updateUser = (request, response) => {
     });
 };
 
-exports.deleteUser = (request, response) => {
+export function deleteUser(request, response) {
     User.findOneAndDelete( { _id: request.params.userId}, (error, user) => {
         if (error) {
             response.send(error);

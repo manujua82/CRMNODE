@@ -1,17 +1,7 @@
-const userController = require ('../controllers/userController');
-const clientController = require ('../controllers/clientController');
+import { addNewUser, getUsers, getUserWithID, updateUser, deleteUser }  from '../controllers/userController';
+import { login, register, loginRquired } from '../controllers/clientController';
 
-const addNewUser = userController.addNewUser;
-const getUsers = userController.getUsers;
-const getUserWithID = userController.getUserWithID;
-const updateUser = userController.updateUser;
-const deleteUser = userController.deleteUser;
-
-const login = clientController.login;
-const register = clientController.register;
-const loginRquired = clientController.loginRequired;
-
-const routes = (app) => {
+export const routes = (app) => {
     app.route('/user')
     // GET all users
     .get((request, response, next) => {
@@ -42,6 +32,4 @@ const routes = (app) => {
     // login route
     app.route('/auth/login')
         .post(login);
-}
-
-module.exports = routes;
+} 
