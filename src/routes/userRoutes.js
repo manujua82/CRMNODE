@@ -1,7 +1,7 @@
 import { addNewUser, getUsers, getUserWithID, updateUser, deleteUser }  from '../controllers/userController';
-import { login, register, loginRquired } from '../controllers/clientController';
+import { login, register, loginRequired } from '../controllers/clientController';
 
-export const routes = (app) => {
+export function routes(app) {
     app.route('/user')
     // GET all users
     .get((request, response, next) => {
@@ -9,21 +9,20 @@ export const routes = (app) => {
         console.log(`Request from: ${request.originalUrl}`);
         console.log(`Request type: ${request.method}`);
         next();
-    }, loginRquired, getUsers)
+    }, loginRequired , getUsers)
 
     // POST endpoint
-    .post(loginRquired, addNewUser);
+    .post(loginRequired , addNewUser);
 
     app.route('/user/:userId')
     // GET specific User
-    .get(loginRquired, getUserWithID)
+    .get(loginRequired , getUserWithID)
 
     // PUT request
-    .put(loginRquired, updateUser)
+    .put(loginRequired , updateUser)
 
     // DELETE request
-    .delete(loginRquired, deleteUser);
-
+    .delete(loginRequired , deleteUser);
 
     // registration route
     app.route('/auth/register')
