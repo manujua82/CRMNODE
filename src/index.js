@@ -25,12 +25,12 @@ app.use(bodyParser.json());
 app.use((request, response, next) => {
     if (request.headers && request.headers.authorization && request.headers.authorization.split(' ')[0] === 'JWT') {
         jsonwebtoken.verify(request.headers.authorization.split(' ')[1], 'RESTFULAPIs', (error, decode) => {
-            if (error) request.client = undefined;
-            request.client = decode;
+            if (error) request.subscriber = undefined;
+            request.subscriber = decode;
             next();
         });
     } else {
-        request.client = undefined;
+        request.subscriber = undefined;
         next();
     }
 });

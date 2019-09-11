@@ -4,6 +4,7 @@ import { UserSchema } from '../models/userModel';
 const User = mongoose.model('User', UserSchema);
 
 export function addNewUser(request, response) {
+    // create account first
     let newUser = new User(request.body);
     newUser.save((error, user) => {
         if (error) {

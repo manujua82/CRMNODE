@@ -1,5 +1,5 @@
 import { addNewUser, getUsers, getUserWithID, updateUser, deleteUser }  from '../controllers/userController';
-import { login, register, loginRequired } from '../controllers/clientController';
+import { login, register, loginRequired } from '../controllers/subscriberController';
 
 export function routes(app) {
     app.route('/user')
